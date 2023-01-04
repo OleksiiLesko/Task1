@@ -8,6 +8,8 @@ namespace Task1.CustomLinkedList
 {
     /// <summary>
     /// LinkedList 
+    /// Each element of the list has a pointer to the next element. 
+    /// The last element of the list points to NULL.
     /// </summary>
     public class CustomLinkedList
     {
@@ -28,16 +30,8 @@ namespace Task1.CustomLinkedList
         /// </summary>
         public CustomLinkedList()
         {
-            DeleteAll();
+            Clear();
         }
-
-        private void DeleteAll()
-        {
-            Head = null;
-            Tail = null;
-            Count = 0;
-        }
-
         /// <summary>
         /// Create list with data.
         /// </summary>
@@ -54,7 +48,7 @@ namespace Task1.CustomLinkedList
             Count = 1;
         }
         /// <summary>
-        /// Adding data to the tail of the list.
+        /// Add data to the tail of the list.
         /// </summary>
         /// <param name="data"></param>
         public void Add(int data)
@@ -72,7 +66,7 @@ namespace Task1.CustomLinkedList
             }
         }
         /// <summary>
-        /// Deleting first occurrence of data in the list.
+        /// Delete first occurrence of data in the list.
         /// </summary>
         /// <param name="data"></param>
         public void Delete(int data)
@@ -95,11 +89,116 @@ namespace Task1.CustomLinkedList
                         Count--;
                         return;
                     }
-                    previous= current;
+                    previous = current;
                     current = current.Next;
                 }
             }
+            else
+            {
+                SetHaidAndTail(data);
+            }
         }
-        
+        /// <summary>
+        /// Add data to the head of the list.
+        /// </summary>
+        /// <param name="data"></param>
+        public void AppendHead(int data)
+        {
+            var item = new Item(data)
+            {
+                Next = Head
+            };
+            Head = item;
+            Count++;
+        }
+        /// <summary>
+        /// Add data to the tail of the list.
+        /// </summary>
+        /// <param name="data"></param>
+        public void AppendTail(int data)
+        {
+            var item = new Item(data)
+            {
+                Next = Tail
+            };
+            Tail = item;
+            Count++;
+        }
+        /// <summary>
+        /// Insert data after certain element.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="data"></param>
+        public void InsertAfter(int target, int data)
+        {
+            if (Head != null)
+            {
+                var current = Head;
+                while (current != null)
+                {
+                    if (current.Data.Equals(target))
+                    {
+                        var item = new Item(data);
+                        item.Next = current.Next;
+                        current.Next = item;
+                        Count++;
+                        return;
+                    }
+                    else
+                    {
+                        current = current.Next;
+                    }
+                }
+            }
+            else
+            {
+                //If list is empty add data or stay empty
+                //SetHaidAndTail(target);
+                // Add(data);
+            }
+        }
+        /// <summary>
+        /// Insert data before certain element.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="data"></param>
+        public void InsertBefore(int target, int data)
+        {
+            if (Head != null)
+            {
+                var current = Head;
+                while (current != null)
+                {
+                    if (current.Data.Equals(target))
+                    {
+                        var item = new Item(data);
+                        item.Next = current.Next;
+                        current.Next = item;
+                        Count++;
+                        return;
+                    }
+                    else
+                    {
+                        current = current.Next;
+                    }
+                }
+            }
+            else
+            {
+                //If list is empty add data or stay empty
+                //SetHaidAndTail(target);
+                // Add(data);
+            }
+        }
+        /// <summary>
+        /// Clear list.
+        /// </summary>
+        public void Clear()
+        {
+            Head = null;
+            Tail = null;
+            Count = 0;
+        }
+
     }
 }

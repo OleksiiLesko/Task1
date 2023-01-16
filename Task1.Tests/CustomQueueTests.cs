@@ -20,10 +20,10 @@ namespace Task1.CustomQueue
             Assert.True(customQueue.Contains(1));
         }
         [Fact]
-        public void Contains_QueueIsEmpty()
+        public void Contains_QueueIs_Empty()
         {
-            var customStack = new CustomQueue();
-            Assert.False(customStack.Contains(1));
+            var customQueue = new CustomQueue();
+            Assert.False(customQueue.Contains(1));
         }
         [Fact]
         public void CopyTo_CopiesElementsFromOneCollectionToAnother()

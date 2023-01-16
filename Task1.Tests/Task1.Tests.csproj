@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Task1.CustomLinkedList\Task1.CustomLinkedList.csproj" />
     <ProjectReference Include="..\Task1.CustomQueue\Task1.CustomQueue.csproj" />
     <ProjectReference Include="..\Task1.CustomStack\Task1.CustomStack.csproj" />
   </ItemGroup>

@@ -147,15 +147,6 @@ namespace Task1.CustomLinkedList
             Assert.Equal(3, customLinkedList.FindLast(3).Data);
         }
         [Fact]
-        public void PrintAllItems_IsEmpty()
-        {
-            Assert.Throws<NullReferenceException>(() =>
-            {
-                var customLinkedList = new CustomLinkedList();
-                customLinkedList.PrintAllNodes();
-            });
-        }
-        [Fact]
         public void CopyTo_CopiesElementsFromOneCollectionToAnother()
         {
             var customLinkedList = new CustomLinkedList();

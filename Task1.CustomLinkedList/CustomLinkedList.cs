@@ -230,7 +230,7 @@ namespace Task1.CustomLinkedList
         /// <exception cref="InvalidOperationException"></exception>
         public void RemoveLast()
         {
-            if (Head == null && Tail == null) throw new InvalidOperationException("The list is empty");
+            if (Head == null && Tail == null) throw new InvalidOperationException("The linked list is empty");
 
             Tail = Tail.Previous;
             Tail.Next = null;
@@ -277,7 +277,7 @@ namespace Task1.CustomLinkedList
         {
             if (list == null)
             {
-                throw new ArgumentNullException("Argument null exception");
+                throw new ArgumentNullException("The list is equals null");
             }
             if (Count == 0) return;
             var curr = Head;

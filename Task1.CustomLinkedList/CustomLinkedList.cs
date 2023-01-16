@@ -44,25 +44,6 @@ namespace Task1.CustomLinkedList
             SetHaidAndTail(data);
         }
         /// <summary>
-        /// Traverse from head and print all nodes value.
-        /// </summary>
-        public void PrintAllNodes()
-        {
-            var curr = Head;
-            if (Head == null)
-            {
-               throw new NullReferenceException("List is empty ");
-            }
-            Console.Write("Nodes of doubly linked list: Head ->");
-            while (curr != null)
-            {
-                Console.Write(curr.Data);
-                curr = curr.Next;
-                Console.Write("->");
-            }
-            Console.Write("NULL \n");
-        }
-        /// <summary>
         /// Set data to the head and tail in the list.
         /// </summary>
         /// <param name="data"></param>

@@ -10,9 +10,9 @@ namespace Task1.CustomQueue
     /// CustomQueue represents a first-in, first out collection of object. 
     /// It is used when you need a first-in, first-out access of items.
     /// </summary>
-    public class CustomQueue
+    public class CustomQueue<T>
     {
-        private int[] array;
+        private T[] array;
         /// <summary>
         /// The index from which to dequeue if the queue isn't empty.
         /// </summary>
@@ -29,13 +29,14 @@ namespace Task1.CustomQueue
         /// Number of elements.
         /// </summary>
         public int Count { get; private set; }
+
         /// <summary>
         ///  Creates a queue with room for capacity objects. The default initial
         /// capacity and grow factor are used.
         /// </summary>
         public CustomQueue()
         {
-            array = Array.Empty<int>();
+            array = Array.Empty<T>();
 
         }
         /// <summary>
@@ -48,26 +49,10 @@ namespace Task1.CustomQueue
         {
             if (capacity < 0)
                 throw new ArgumentOutOfRangeException("Capacity out of range exception");
-            array = new int[capacity];
-        }
-        /// <summary>
-        /// Increments the index wrapping it if necessary.
-        /// Moves the enumerator to the next element of the queue.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void MoveNext(ref int index)
-        {
-            if (index < 0 || index > MaxCount)
-            {
-                throw new ArgumentOutOfRangeException("Index out of range exception");
-            }
-            int tmp = index + 1;
-            if (tmp == MaxCount)
-            {
-                tmp = 0;
-            }
-            index = tmp;
+            array = new T[capacity];
+            head = 0;
+            tail = 0;
+            Count = 0;
         }
         /// <summary>
         /// Grows or shrinks the buffer to hold capacity objects.Capacity
@@ -76,7 +61,7 @@ namespace Task1.CustomQueue
         /// <param name="capacity"></param>
         private void SetCapacity(int capacity)
         {
-            int[] newarray = new int[capacity];
+            T[] newarray = new T[capacity];
             if (Count > 0)
             {
                 if (head < tail)
@@ -113,14 +98,14 @@ namespace Task1.CustomQueue
         /// Adds item to the tail of the queue.
         /// </summary>
         /// <param name="item"></param>
-        public void Enqueue(int item)
+        public void Enqueue(T item)
         {
             if (Count == MaxCount)
             {
                 Grow(Count + 1);
             }
             array[tail] = item;
-            MoveNext(ref tail);
+            tail = (tail + 1) % array.Length;
             Count++;
         }
         /// <summary>
@@ -128,16 +113,15 @@ namespace Task1.CustomQueue
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public int Dequeue()
+        public T Dequeue()
         {
-            int head = this.head;
-            int[] newarray = array;
             if (Count == 0)
             {
                 throw new InvalidOperationException("Count of elements = 0");
             }
-            int removed = newarray[head];
-            MoveNext(ref this.head);
+            T removed = array[head];
+            array[head] = default(T);
+            head = (head + 1) % array.Length;
             Count--;
             return removed;
         }
@@ -146,7 +130,7 @@ namespace Task1.CustomQueue
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public int Peek()
+        public T Peek()
         {
             if (Count == 0)
             {
@@ -162,15 +146,15 @@ namespace Task1.CustomQueue
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool Contains(int item)
+        public bool Contains(T item)
         {
             if (Count == 0)
             {
                 return false;
             }
-            foreach (var i in array)
+            foreach (T i in array)
             {
-                if (item == i)
+                if (item.Equals(i))
                     return true;
             }
             return false;
@@ -180,7 +164,7 @@ namespace Task1.CustomQueue
         /// </summary>
         /// <param name="queue"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void CopyTo(CustomQueue queue)
+        public void CopyTo(CustomQueue<T> queue)
         {
             if (queue == null)
             {
@@ -222,20 +206,20 @@ namespace Task1.CustomQueue
         /// </summary>
         /// <param name="queue"></param>
         /// <returns></returns>
-        public bool Equals(CustomQueue queue)
+        public bool Equals(CustomQueue<T> queue)
         {
             if (queue == null)
             {
                 return false;
             }
 
-            if (MaxCount != queue.MaxCount)
+            if (!MaxCount.Equals(queue.MaxCount))
             {
                 return false;
             }
             for (int i = 0; i < MaxCount; i++)
             {
-                if (array[i] != queue.array[i])
+                if (!array[i].Equals(queue.array[i]))
                 {
                     return false;
                 }

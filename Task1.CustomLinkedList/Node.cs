@@ -10,25 +10,25 @@ namespace Task1.CustomLinkedList
     /// <summary>
     /// List cell.
     /// </summary>
-    public class Node
+    public class Node<T>
     {
         /// <summary>
         /// The data stored in the list cell.
         /// </summary>
-        public int Data { get; set; }
+        public T Data { get; set; }
         /// <summary>
         /// Next list cell.
         /// </summary>
-        public Node Next { get; set; }
+        public Node<T> Next { get; set; }
         /// <summary>
         /// Previous list cell.
         /// </summary>
-        public Node Previous { get; set; }
+        public Node<T> Previous { get; set; }
         /// <summary>
         /// Item without data
         /// </summary>
         public Node() { }
-        public Node(Node data)
+        public Node(Node<T> data)
         { 
             Data = data.Data;
         }
@@ -36,7 +36,7 @@ namespace Task1.CustomLinkedList
         /// Item with data.
         /// </summary>
         /// <param name="data"></param>
-        public Node(int data)
+        public Node(T data)
         {
             Data = data;
         }
@@ -44,9 +44,9 @@ namespace Task1.CustomLinkedList
         /// Copy elments from one collection to other.
         /// </summary>
         /// <returns></returns>
-        public Node Copy()
+        public Node<T> Copy()
         {
-            return new Node(Data);
+            return new Node<T>(Data);
         }
     }
 }

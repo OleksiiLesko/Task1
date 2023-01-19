@@ -14,16 +14,16 @@ namespace Task1.CustomLinkedList
     /// Each element of the list has a pointer to the next element. 
     /// The last element of the list points to NULL.
     /// </summary>
-    public class CustomLinkedList
+    public class CustomLinkedList<T>
     {
         /// <summary>
         /// First element in the list.
         /// </summary>
-        public Node Head { get; private set; }
+        public Node<T> Head { get; private set; }
         /// <summary>
         /// Last element in the list.
         /// </summary>
-        public Node Tail { get; private set; }
+        public Node<T> Tail { get; private set; }
         /// <summary>
         /// Count elements in the list.
         /// </summary>
@@ -39,7 +39,7 @@ namespace Task1.CustomLinkedList
         /// Create list with data.
         /// </summary>
         /// <param name="data"></param>
-        public CustomLinkedList(int data)
+        public CustomLinkedList(T data)
         {
             SetHaidAndTail(data);
         }
@@ -47,9 +47,9 @@ namespace Task1.CustomLinkedList
         /// Set data to the head and tail in the list.
         /// </summary>
         /// <param name="data"></param>
-        private void SetHaidAndTail(int data)
+        private void SetHaidAndTail(T data)
         {
-            var item = new Node(data);
+            var item = new Node<T>(data);
             Head = item;
             Tail = item;
             Count = 1;
@@ -58,12 +58,12 @@ namespace Task1.CustomLinkedList
         /// Delete first occurrence of data in the list.
         /// </summary>
         /// <param name="data"></param>
-        public void Remove(int data)
+        public void Remove(T data)
         {
             var current = Head;
             while (current != null)
             {
-                if (current.Data == data)
+                if (current.Data.Equals(data))
                 {
                     if (current.Next == null)
                     {
@@ -92,9 +92,9 @@ namespace Task1.CustomLinkedList
         /// Add data to the head of the list.
         /// </summary>
         /// <param name="data"></param>
-        public void AddFirst(int data)
+        public void AddFirst(T data)
         {
-            var item = new Node(data)
+            var item = new Node<T>(data)
             {
                 Next = Head
             };
@@ -113,9 +113,9 @@ namespace Task1.CustomLinkedList
         /// Add data to the tail of the list.
         /// </summary>
         /// <param name="data"></param>
-        public void AddLast(int data)
+        public void AddLast(T data)
         {
-            var item = new Node(data);
+            var item = new Node<T>(data);
             if (Tail == null)
             {
                 Head = item;
@@ -132,9 +132,9 @@ namespace Task1.CustomLinkedList
         /// Add data to the tail of the list.
         /// </summary>
         /// <param name="data"></param>
-        private void Add(Node data)
+        private void Add(Node<T> data)
         {
-            var item = new Node(data);
+            var item = new Node<T>(data);
             if (Tail == null)
             {
                 Head = item;
@@ -152,7 +152,7 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="target"></param>
         /// <param name="data"></param>
-        public void InsertAfter(int target, int data)
+        public void InsertAfter(T target, T data)
         {
             if (Head != null)
             {
@@ -161,7 +161,7 @@ namespace Task1.CustomLinkedList
                 {
                     if (current.Data.Equals(target))
                     {
-                        var item = new Node(data);
+                        var item = new Node<T>(data);
                         item.Next = current.Next;
                         current.Next = item;
                         Count++;
@@ -184,21 +184,21 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="target"></param>
         /// <param name="data"></param>
-        public void InsertBefore(int target, int data)
+        public void InsertBefore(T target, T data)
         {
-            if (Head.Data == target)
+            if (Head.Data.Equals(target))
             {
-                var current = new Node(data);
+                var current = new Node<T>(data);
                 current.Next = Head;
                 Head = current;
                 return;
             }
             else
             {
-                Node secondCurrent = null;
-                for (var current = Head; current.Data != target;
+                Node<T> secondCurrent = null;
+                for (var current = Head; !current.Data.Equals(target);
                     secondCurrent = current, current = current.Next) ;
-                var thirdCurrent = new Node(data);
+                var thirdCurrent = new Node<T>(data);
                 thirdCurrent.Next = secondCurrent.Next;
                 secondCurrent.Next = thirdCurrent;
                 return;
@@ -242,7 +242,7 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool Contains(int data)
+        public bool Contains(T data)
         {
             if (Count == 0)
             {
@@ -273,7 +273,7 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="queue"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void CopyTo(CustomLinkedList list)
+        public void CopyTo(CustomLinkedList<T> list)
         {
             if (list == null)
             {
@@ -294,12 +294,12 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="queue"></param>
         /// <returns></returns>
-        public bool Equals(CustomLinkedList secondlist)
+        public bool Equals(CustomLinkedList<T> secondlist)
         {
-            Node a = Head, b = secondlist.Head;
+            Node<T> a = Head, b = secondlist.Head;
             while (a != null && b != null)
             {
-                if (a.Data != b.Data)
+                if (!a.Data.Equals(b.Data))
                     return false;
                 a = a.Next;
                 b = b.Next;
@@ -311,12 +311,12 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public Node FindFirst(int data)
+        public Node<T> FindFirst(T data)
         {
             var current = Head;
             while (current != null)
             {
-                if (current.Data == data)
+                if (current.Data.Equals(data))
                 {
                     return current;
                 }
@@ -329,12 +329,12 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public Node FindLast(int data)
+        public Node<T> FindLast(T data)
         {
             var current = Tail;
             while (current != null)
             {
-                if (current.Data == data)
+                if (current.Data.Equals(data))
                 {
                     return current;
                 }

@@ -7,9 +7,9 @@ namespace Task1.CustomStack
     /// CustomStack represents a last-in first-out collection of object. 
     /// It is used when you need a last-in, first-out access of items.
     /// </summary>
-    public class CustomStack
+    public class CustomStack<T>
     {
-        private int[] array;
+        private T[] array;
         /// <summary>
         /// Set stack size.
         /// </summary>
@@ -28,7 +28,7 @@ namespace Task1.CustomStack
         /// <param name="size"></param>
         public CustomStack(int size = 10)
         {
-            array = new int[size];
+            array = new T[size];
             this.size = size;
         }
         /// <summary>
@@ -36,7 +36,7 @@ namespace Task1.CustomStack
         /// </summary>
         /// <param name="data"></param>
         /// <param name="size"></param>
-        public CustomStack(int data, int size = 10) : this(size)
+        public CustomStack(T data, int size = 10) : this(size)
         {
             array[Count] = data;
             Count++;
@@ -46,7 +46,7 @@ namespace Task1.CustomStack
         /// </summary>
         /// <param name="item"></param>
         /// <exception cref="StackOverflowException"></exception>
-        public void Push(int item)
+        public void Push(T item)
         {
             if (Count < size)
             {
@@ -63,11 +63,11 @@ namespace Task1.CustomStack
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public int Pop()
+        public T Pop()
         {
             if (Count > 0)
             {
-                var item = array[Count - 1];
+                T item = array[Count - 1];
                 Count--;
                 return item;
             }
@@ -81,7 +81,7 @@ namespace Task1.CustomStack
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public int Peek()
+        public T Peek()
         {
             if (Count > 0)
             {
@@ -98,7 +98,7 @@ namespace Task1.CustomStack
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool Contains(int item)
+        public bool Contains(T item)
         {
             if (Count == 0)
             {
@@ -106,7 +106,7 @@ namespace Task1.CustomStack
             }
             foreach (var i in array)
             {
-                if (item == i)
+                if (item.Equals(i))
                     return true;
             }
             return false;
@@ -117,7 +117,7 @@ namespace Task1.CustomStack
         /// </summary>
         /// <param name="stack"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void CopyTo(CustomStack stack)
+        public void CopyTo(CustomStack<T> stack)
         {
             if (stack == null)
             {
@@ -148,7 +148,7 @@ namespace Task1.CustomStack
         /// </summary>
         /// <param name="stack"></param>
         /// <returns></returns>
-        public bool Equals(CustomStack stack)
+        public bool Equals(CustomStack<T> stack)
         {
             if (stack == null)
             {
@@ -161,7 +161,7 @@ namespace Task1.CustomStack
             }
             for (int i = 0; i < MaxCount; i++)
             {
-                if (array[i] != stack.array[i])
+                if (!array[i].Equals(stack.array[i]))
                 {
                     return false;
                 }

@@ -11,7 +11,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void Clear_RemovesAllItems()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             customLinkedList.Clear();
@@ -20,7 +20,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void Contains_ContainsAtLeastOneObjectEqualToItem()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             Assert.False(customLinkedList.Contains(2));
             Assert.True(customLinkedList.Contains(1));
@@ -28,21 +28,21 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void Contains_IsEmpty()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             Assert.False(customLinkedList.Contains(1));
         }
         [Fact]
         public void Equals_HeadEqualsNull()
         {
-            var customLinkedList = new CustomLinkedList();
-            var newCustomLinkedlist = new CustomLinkedList(3);
+            var customLinkedList = new CustomLinkedList<int>();
+            var newCustomLinkedlist = new CustomLinkedList<int>(3);
             newCustomLinkedlist.AddLast(1);
             Assert.False(customLinkedList.Equals(newCustomLinkedlist));
         }
         [Fact]
         public void AddFirst_ItemShouldBecomeHead()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(3);
             customLinkedList.AddFirst(2);
@@ -51,7 +51,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void AddLast_ItemShouldBecomeTail()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             Assert.Equal(2, customLinkedList.Tail.Data);
@@ -59,7 +59,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void Remove_DeleteOccurenceItem()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             customLinkedList.AddLast(3);
@@ -69,7 +69,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void RemoveFirst_DeleteHead()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             customLinkedList.AddLast(3);
@@ -81,14 +81,14 @@ namespace Task1.CustomLinkedList
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var customLinkedList = new CustomLinkedList();
+                var customLinkedList = new CustomLinkedList<int>();
                 customLinkedList.RemoveFirst();
             });
         }
         [Fact]
         public void RemoveLast_DeleteTail()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             customLinkedList.AddLast(3);
@@ -100,14 +100,14 @@ namespace Task1.CustomLinkedList
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var customLinkedList = new CustomLinkedList();
+                var customLinkedList = new CustomLinkedList<int>();
                 customLinkedList.RemoveLast();
             });
         }
         [Fact]
         public void InsertAfter_AddElementAfterCertain()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             customLinkedList.InsertAfter(2, 3);
@@ -116,14 +116,14 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void InsertAfter_ListIsEmpty()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.InsertAfter(1, 2);
             Assert.Equal(2, customLinkedList.Head.Next.Data);
         }
         [Fact]
         public void InsertBefore_AddElementBeforeCertain()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             customLinkedList.InsertBefore(2, 3);
@@ -132,7 +132,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void FindFirst_FindFirstElement()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             Assert.Equal(2, customLinkedList.FindFirst(2).Data);
@@ -140,7 +140,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void FindLast_FindLastElement()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
             customLinkedList.AddLast(2);
             customLinkedList.AddLast(3);
@@ -149,9 +149,9 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void CopyTo_CopiesElementsFromOneCollectionToAnother()
         {
-            var customLinkedList = new CustomLinkedList();
+            var customLinkedList = new CustomLinkedList<int>();
             customLinkedList.AddLast(1);
-            var newCustomLinkedList = new CustomLinkedList();
+            var newCustomLinkedList = new CustomLinkedList<int>();
             customLinkedList.CopyTo(newCustomLinkedList);
             Assert.True(customLinkedList.Equals(newCustomLinkedList));
         }

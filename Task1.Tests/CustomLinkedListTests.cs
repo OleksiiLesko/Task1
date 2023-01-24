@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Task1.CustomLinkedList
 {
     public class CustomLinkedListTests
@@ -154,6 +149,25 @@ namespace Task1.CustomLinkedList
             var newCustomLinkedList = new CustomLinkedList<int>();
             customLinkedList.CopyTo(newCustomLinkedList);
             Assert.True(customLinkedList.Equals(newCustomLinkedList));
+        }
+        [Fact]
+        public void GetEnumerator_IsEmpty()
+        {
+            var customLinkedList = new CustomLinkedList<int>();
+            Assert.False(customLinkedList.GetEnumerator().MoveNext());
+        }
+        [Fact]
+        public void GetEnumerator_ReturnsElementsInOrderOfEntry()
+        {
+            var customLinkedList = new CustomLinkedList<int>();
+            customLinkedList.AddLast(1);
+            customLinkedList.AddLast(2);
+            customLinkedList.AddLast(3);
+            var secondCustomLinkedList = new CustomLinkedList<int>();
+            secondCustomLinkedList.AddLast(1);
+            secondCustomLinkedList.AddLast(2);
+            secondCustomLinkedList.AddLast(3);
+            Assert.True(customLinkedList.SequenceEqual(secondCustomLinkedList));
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace Task1.CustomStack
+﻿using System.Collections;
+using Task1.CustomQueue;
+
+namespace Task1.CustomStack
 {
     public class CustomStackTests
     {
@@ -121,6 +124,25 @@
                 newCustomStack.Push(2);
                 newCustomStack.Push(3);
             });
+        }
+        [Fact]
+        public void GetEnumerator_ReturnsElementsInOrderOfEntry()
+        {
+            var customStack = new CustomStack<int>();
+            customStack.Push(1);
+            customStack.Push(2);
+            customStack.Push(3);
+            var secondCustomStack = new CustomStack<int>();
+            secondCustomStack.Push(1);
+            secondCustomStack.Push(2);
+            secondCustomStack.Push(3);
+            Assert.True(customStack.SequenceEqual(secondCustomStack));
+        }
+        [Fact]
+        public void GetEnumerator_IsEmpty()
+        {
+            var customStack = new CustomStack<int>();
+            Assert.False(customStack.GetEnumerator().MoveNext());
         }
     }
 }

@@ -1,3 +1,5 @@
+using Task1.CustomLinkedList;
+
 namespace Task1.CustomQueue
 {
     public class CustomQueueTests
@@ -118,5 +120,25 @@ namespace Task1.CustomQueue
                 customQueue.Peek();
             });
         }
+        [Fact]
+        public void GetEnumerator_IsEmpty()
+        {
+            var customQueue = new CustomQueue<int>();
+            Assert.False(customQueue.GetEnumerator().MoveNext());
+        }
+        [Fact]
+        public void GetEnumerator_ReturnsElementsInOrderOfEntry()
+        {
+            var customQueue = new CustomQueue<int>();
+            customQueue.Enqueue(1);
+            customQueue.Enqueue(2);
+            customQueue.Enqueue(3);
+            var secondCustomQueue = new CustomQueue<int>();
+            secondCustomQueue.Enqueue(1);
+            secondCustomQueue.Enqueue(2);
+            secondCustomQueue.Enqueue(3);
+            Assert.True(customQueue.SequenceEqual(secondCustomQueue));
+        }
+
     }
 }

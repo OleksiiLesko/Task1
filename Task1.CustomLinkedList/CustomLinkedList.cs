@@ -14,7 +14,7 @@ namespace Task1.CustomLinkedList
     /// Each element of the list has a pointer to the next element. 
     /// The last element of the list points to NULL.
     /// </summary>
-    public class CustomLinkedList<T>
+    public class CustomLinkedList<T>: IEnumerable<T>
     {
         /// <summary>
         /// First element in the list.
@@ -342,6 +342,28 @@ namespace Task1.CustomLinkedList
             }
             return null;
         }
+        /// <summary>
+        /// Returns elements in order of entry.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<T> GetEnumerator()
+        {
+            Node<T> current = Head;
+            while (current != null)
+            {
+                yield return current.Data;
+                current = current.Next;
+            }
+        }
+        /// <summary>
+        /// Returns the method GetEnumerator().
+        /// </summary>
+        /// <returns></returns>
+         IEnumerator IEnumerable.GetEnumerator()
+        {
+           return GetEnumerator();
+        }
+        
     }
 
 }

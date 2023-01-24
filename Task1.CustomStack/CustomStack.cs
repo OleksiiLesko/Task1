@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Task1.CustomStack
@@ -7,7 +10,7 @@ namespace Task1.CustomStack
     /// CustomStack represents a last-in first-out collection of object. 
     /// It is used when you need a last-in, first-out access of items.
     /// </summary>
-    public class CustomStack<T>
+    public class CustomStack<T>: IEnumerable<T>
     {
         private T[] array;
         /// <summary>
@@ -168,6 +171,25 @@ namespace Task1.CustomStack
             }
 
             return true;
+        }
+        /// <summary>
+        /// Returns elements in order of entry.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                yield return array[i];
+            }
+        }
+        /// <summary>
+        /// Returns the method GetEnumerator().
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+           return GetEnumerator();
         }
     }
 

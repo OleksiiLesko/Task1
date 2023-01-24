@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -10,7 +11,7 @@ namespace Task1.CustomQueue
     /// CustomQueue represents a first-in, first out collection of object. 
     /// It is used when you need a first-in, first-out access of items.
     /// </summary>
-    public class CustomQueue<T>
+    public class CustomQueue<T>: IEnumerable<T>
     {
         private T[] array;
         /// <summary>
@@ -29,7 +30,6 @@ namespace Task1.CustomQueue
         /// Number of elements.
         /// </summary>
         public int Count { get; private set; }
-
         /// <summary>
         ///  Creates a queue with room for capacity objects. The default initial
         /// capacity and grow factor are used.
@@ -226,6 +226,42 @@ namespace Task1.CustomQueue
             }
 
             return true;
+        }
+        /// <summary>
+        /// Returns elements in order of entry.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<T> GetEnumerator()
+        {
+            if (head != -1 )
+            {
+                if (tail >= head)
+                {
+                    for (int i = head; i < tail; i++)
+                    {
+                        yield return array[i];
+                    }
+                }
+                else
+                {
+                    for (int i = head; i < Count; i++)
+                    {
+                        yield return array[i];
+                    }
+                    for (int i = 0; i <= tail; i++)
+                    {
+                        yield return array[i];
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Returns the method GetEnumerator();
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+           return GetEnumerator();
         }
     }
 }

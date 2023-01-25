@@ -1,4 +1,5 @@
-﻿using Task1.CustomStack;
+﻿using System.Drawing;
+using Task1.CustomStack;
 
 var stackArray = new CustomStack<int>(10);
 Console.WriteLine($"Amount of elements at the beginning:{stackArray.Count}\n");
@@ -18,7 +19,18 @@ stackArray.Push(200);
 stackArray.Push(300);
 stackArray.Push(400);
 stackArray.Push(500);
+foreach (var item in stackArray)
+{
+    Console.Write(item + " ");
+}
 Console.WriteLine();
+for (int i = 0; i < stackArray.Count; i++)
+{
+    stackArray[2] = 700;
+    Console.Write(stackArray[i] + " ");
+}
+Console.WriteLine();
+Console.WriteLine(stackArray[3]);
 Console.WriteLine();
 Console.WriteLine($"Determines if an element is in a Stack collection:{stackArray.Contains(100)}\n");
 Console.WriteLine($"Returns the object at the beginning of the Stack without deleting it:{stackArray.Peek()}\n");

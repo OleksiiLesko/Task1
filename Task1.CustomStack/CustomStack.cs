@@ -26,6 +26,31 @@ namespace Task1.CustomStack
         /// </summary>
         public int Count { get; private set; }
         /// <summary>
+        /// Setting and getting an element by index.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public T this[int position]
+        {
+            get
+            {
+                if ((position < 0) || ( position > Count))
+                {
+                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomStack");
+                }
+                return array[position];
+            }
+            set
+            {
+                if ((position < 0) || (position > Count))
+                {
+                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomStack");
+                }
+                array[position] = value;
+            }
+        }
+        /// <summary>
         /// Create a stack with a defalt size 10
         /// </summary>
         /// <param name="size"></param>

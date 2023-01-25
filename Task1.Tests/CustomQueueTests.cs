@@ -1,4 +1,5 @@
 using Task1.CustomLinkedList;
+using Task1.CustomStack;
 
 namespace Task1.CustomQueue
 {
@@ -138,6 +139,19 @@ namespace Task1.CustomQueue
             secondCustomQueue.Enqueue(2);
             secondCustomQueue.Enqueue(3);
             Assert.True(customQueue.SequenceEqual(secondCustomQueue));
+        }
+        [Fact]
+        public void Indexers_LessOrMoreThenCount()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                var customQueue = new CustomQueue<int>(3);
+                customQueue.Enqueue(1);
+                customQueue.Enqueue(2);
+                customQueue.Enqueue(3);
+                Console.WriteLine(customQueue[-1]);
+                Console.WriteLine(customQueue[4]);
+            });
         }
 
     }

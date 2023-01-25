@@ -1,4 +1,6 @@
 ﻿
+using Task1.CustomQueue;
+
 namespace Task1.CustomLinkedList
 {
     public class CustomLinkedListTests
@@ -168,6 +170,19 @@ namespace Task1.CustomLinkedList
             secondCustomLinkedList.AddLast(2);
             secondCustomLinkedList.AddLast(3);
             Assert.True(customLinkedList.SequenceEqual(secondCustomLinkedList));
+        }
+        [Fact]
+        public void Indexers_LessOrMoreThenCount()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                var customLinkedList = new CustomLinkedList<int>(3);
+                customLinkedList.AddLast(1);
+                customLinkedList.AddLast(2);
+                customLinkedList.AddLast(3);
+                Console.WriteLine(customLinkedList[-1]);
+                Console.WriteLine(customLinkedList[4]);
+            });
         }
     }
 }

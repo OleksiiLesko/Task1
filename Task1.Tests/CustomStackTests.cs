@@ -144,5 +144,18 @@ namespace Task1.CustomStack
             var customStack = new CustomStack<int>();
             Assert.False(customStack.GetEnumerator().MoveNext());
         }
+        [Fact]
+        public void Indexers_LessOrMoreThenCount()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                var newCustomStack = new CustomStack<int>(3);
+                newCustomStack.Push(1);
+                newCustomStack.Push(2);
+                newCustomStack.Push(3);
+                Console.WriteLine(newCustomStack[-1]);
+                Console.WriteLine(newCustomStack[4]);
+            });
+        }
     }
 }

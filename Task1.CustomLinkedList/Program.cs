@@ -7,15 +7,22 @@ list.AddLast(2);
 list.AddLast(3);
 list.AddLast(4);
 list.AddLast(5);
-
+Console.WriteLine("\nFirts occurence of " + list.FindFirst(3).Data + " next item " + list.FindFirst(3).Next.Data);
+Console.WriteLine("Last occurence of " + list.FindLast(5).Data + " previous item " + list.FindLast(5).Previous.Data);
+Console.WriteLine();
 foreach (var item in list)
 {
     Console.Write(item + " ");
 }
-
 Console.WriteLine();
-Console.WriteLine("\nFirts occurence of " + list.FindFirst(3).Data + " next item " + list.FindFirst(3).Next.Data);
-Console.WriteLine("Last occurence of " + list.FindLast(5).Data + " previous item " + list.FindLast(5).Previous.Data);
+for (int i = 0; i < list.Count; i++)
+{
+    list[4] = 700;
+    Console.Write(list[i] + " ");
+}
+Console.WriteLine();
+Console.WriteLine(list[1]);
+Console.WriteLine();
 list.Remove(1);
 Console.WriteLine();
 foreach (var item in list)

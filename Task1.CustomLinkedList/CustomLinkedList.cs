@@ -29,6 +29,41 @@ namespace Task1.CustomLinkedList
         /// </summary>
         public int Count { get; private set; }
         /// <summary>
+        /// Setting and getting an element by index.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public T this[int position]
+        {
+            get
+            {
+                if ((position < 0) || (position > Count))
+                {
+                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomLinkedList");
+                }
+                Node<T> node = Head;
+                for (int i = 0; i < position; i++)
+                {
+                    node = node.Next;
+                }
+                return node.Data;
+            }
+            set
+            {
+                if ((position < 0) || (position > Count))
+                {
+                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomLinkedList");
+                }
+                Node<T> node = Head;
+                for (int i = 0; i < position; i++)
+                {
+                    node = node.Next;
+                }
+                node.Data = value;
+            }
+        }
+        /// <summary>
         /// Create empty list.
         /// </summary>
         public CustomLinkedList()

@@ -31,6 +31,31 @@ namespace Task1.CustomQueue
         /// </summary>
         public int Count { get; private set; }
         /// <summary>
+        /// Setting and getting an element by index.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public T this[int position]
+        {
+            get
+            {
+                if ((position < 0) || (position > Count))
+                {
+                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomQueue");
+                }
+                return array[position];
+            }
+            set
+            {
+                if ((position < 0) || (position > Count))
+                {
+                    throw new ArgumentOutOfRangeException("Position less or more then count elements in the CustomQueue");
+                }
+                array[position] = value;
+            }
+        }
+        /// <summary>
         ///  Creates a queue with room for capacity objects. The default initial
         /// capacity and grow factor are used.
         /// </summary>

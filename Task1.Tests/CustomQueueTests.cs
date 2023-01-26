@@ -1,6 +1,3 @@
-using Task1.CustomLinkedList;
-using Task1.CustomStack;
-
 namespace Task1.CustomQueue
 {
     public class CustomQueueTests

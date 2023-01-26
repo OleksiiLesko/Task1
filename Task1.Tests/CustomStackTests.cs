@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using Task1.CustomQueue;
-
-namespace Task1.CustomStack
+﻿namespace Task1.CustomStack
 {
     public class CustomStackTests
     {

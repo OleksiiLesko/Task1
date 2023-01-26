@@ -1,5 +1,4 @@
-﻿using System.Xml.Linq;
-using Task1.CustomLinkedList;
+﻿using Task1.CustomLinkedList;
 
 var list = new CustomLinkedList<int>();
 list.AddLast(1);

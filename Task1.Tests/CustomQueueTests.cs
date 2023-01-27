@@ -1,5 +1,5 @@
+using Task1.CustomExceptions;
 using Task1.CustomLinkedList;
-using Task1.CustomStack;
 
 namespace Task1.CustomQueue
 {
@@ -55,7 +55,7 @@ namespace Task1.CustomQueue
         [Fact]
         public void Dequeue_EmptyQueue()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<EmptyException>(() =>
             {
                 var customQueue = new CustomQueue<int>();
                 customQueue.Dequeue();
@@ -115,7 +115,7 @@ namespace Task1.CustomQueue
         [Fact]
         public void Peek_EmptyQueue()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<EmptyException>(() =>
             {
                 var customQueue = new CustomQueue<int>();
                 customQueue.Peek();
@@ -141,16 +141,27 @@ namespace Task1.CustomQueue
             Assert.True(customQueue.SequenceEqual(secondCustomQueue));
         }
         [Fact]
-        public void Indexers_LessOrMoreThenCount()
+        public void Indexers_LessThenCount()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            Assert.Throws<LessThenNecessaryException>(() =>
             {
                 var customQueue = new CustomQueue<int>(3);
                 customQueue.Enqueue(1);
                 customQueue.Enqueue(2);
                 customQueue.Enqueue(3);
                 Console.WriteLine(customQueue[-1]);
-                Console.WriteLine(customQueue[4]);
+            });
+        }
+        [Fact]
+        public void Indexers_MoreThenCount()
+        {
+            Assert.Throws<OverFlowException>(() =>
+            {
+                var customQueue = new CustomQueue<int>(3);
+                customQueue.Enqueue(1);
+                customQueue.Enqueue(2);
+                customQueue.Enqueue(3);
+                Console.WriteLine(customQueue[5]);
             });
         }
 

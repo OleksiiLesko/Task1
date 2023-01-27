@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using Task1.CustomStack;
-
+﻿using Task1.CustomStack;
 var stackArray = new CustomStack<int>(10);
 Console.WriteLine($"Amount of elements at the beginning:{stackArray.Count}\n");
 stackArray.Push(100);

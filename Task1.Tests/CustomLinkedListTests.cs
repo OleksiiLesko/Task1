@@ -1,5 +1,4 @@
-﻿
-using Task1.CustomQueue;
+﻿using Task1.CustomExceptions;
 
 namespace Task1.CustomLinkedList
 {
@@ -76,7 +75,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void RemoveFirst_EmptyLinkedList()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<EmptyException>(() =>
             {
                 var customLinkedList = new CustomLinkedList<int>();
                 customLinkedList.RemoveFirst();
@@ -95,7 +94,7 @@ namespace Task1.CustomLinkedList
         [Fact]
         public void RemoveLast_IsEmpty()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<EmptyException>(() =>
             {
                 var customLinkedList = new CustomLinkedList<int>();
                 customLinkedList.RemoveLast();
@@ -172,16 +171,27 @@ namespace Task1.CustomLinkedList
             Assert.True(customLinkedList.SequenceEqual(secondCustomLinkedList));
         }
         [Fact]
-        public void Indexers_LessOrMoreThenCount()
+        public void Indexers_LessThenCount()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            Assert.Throws<LessThenNecessaryException>(() =>
             {
                 var customLinkedList = new CustomLinkedList<int>(3);
                 customLinkedList.AddLast(1);
                 customLinkedList.AddLast(2);
                 customLinkedList.AddLast(3);
                 Console.WriteLine(customLinkedList[-1]);
-                Console.WriteLine(customLinkedList[4]);
+            });
+        }
+        [Fact]
+        public void Indexers_MoreThenCount()
+        {
+            Assert.Throws<OverFlowException>(() =>
+            {
+                var customLinkedList = new CustomLinkedList<int>(3);
+                customLinkedList.AddLast(1);
+                customLinkedList.AddLast(2);
+                customLinkedList.AddLast(3);
+                Console.WriteLine(customLinkedList[5]);
             });
         }
     }

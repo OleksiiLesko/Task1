@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Collections;
+using Task1.CustomExceptions;
 
 namespace Task1.CustomStack
 {
@@ -30,22 +27,32 @@ namespace Task1.CustomStack
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="LessThenNecessaryException"></exception>
+        /// <exception cref="OverFlowException"></exception>
         public T this[int position]
         {
             get
             {
-                if ((position < 0) || ( position > Count))
+                if (position < 0) 
                 {
-                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomStack");
+                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
+                }
+                if  (position > Count)
+                {
+                    throw new OverFlowException("Position more then count of elements in the CustomStack");
                 }
                 return array[position];
+
             }
             set
             {
-                if ((position < 0) || (position > Count))
+                if (position < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomStack");
+                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
+                }
+                if (position > Count)
+                {
+                    throw new OverFlowException("Position more then count of elements in the CustomStack");
                 }
                 array[position] = value;
             }
@@ -90,7 +97,7 @@ namespace Task1.CustomStack
         /// Removes and returns the object at the beginning of the stack .
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public T Pop()
         {
             if (Count > 0)
@@ -101,14 +108,14 @@ namespace Task1.CustomStack
             }
             else
             {
-                throw new InvalidOperationException("Stack is empty");
+                throw new EmptyException("Stack is empty");
             }
         }
         /// <summary>
-        ///Returns the object at the beginning of the stack without deleting it.
+        /// Returns the object at the beginning of the stack without deleting it.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public T Peek()
         {
             if (Count > 0)
@@ -117,7 +124,7 @@ namespace Task1.CustomStack
             }
             else
             {
-                throw new InvalidOperationException("Stack is empty");
+                throw new EmptyException("Stack is empty");
             }
         }
         /// <summary>

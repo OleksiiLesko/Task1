@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-
-
+using Task1.CustomExceptions;
 
 namespace Task1.CustomQueue
 {
@@ -35,24 +32,33 @@ namespace Task1.CustomQueue
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="LessThenNecessaryException"></exception>
+        /// <exception cref="OverFlowException"></exception>
         public T this[int position]
         {
             get
             {
-                if ((position < 0) || (position > Count))
+                if (position < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomQueue");
+                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
                 }
-                return array[position];
+                if (position > Count)
+                {
+                    throw new OverFlowException("Position more then count of elements in the CustomStack");
+                }
+                    return array[position];
             }
             set
             {
-                if ((position < 0) || (position > Count))
+                    if (position < 0)
+                    {
+                        throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
+                    }
+                if (position > Count)
                 {
-                    throw new ArgumentOutOfRangeException("Position less or more then count elements in the CustomQueue");
+                    throw new OverFlowException("Position more then count of elements in the CustomStack");
                 }
-                array[position] = value;
+                        array[position] = value;
             }
         }
         /// <summary>
@@ -69,11 +75,11 @@ namespace Task1.CustomQueue
         /// is used.
         /// </summary>
         /// <param name="capacity"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public CustomQueue(int capacity)
         {
             if (capacity < 0)
-                throw new ArgumentOutOfRangeException("Capacity out of range exception");
+                throw new LessThenNecessaryException("Capacity out of range ");
             array = new T[capacity];
             head = 0;
             tail = 0;
@@ -137,12 +143,12 @@ namespace Task1.CustomQueue
         /// Removes the object at the head of the queue and returns it. 
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public T Dequeue()
         {
             if (Count == 0)
             {
-                throw new InvalidOperationException("Count of elements = 0");
+                throw new EmptyException("Count of elements = 0");
             }
             T removed = array[head];
             array[head] = default(T);
@@ -154,12 +160,12 @@ namespace Task1.CustomQueue
         /// Returns the object at the head of the queue. The object remains in the queue.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public T Peek()
         {
             if (Count == 0)
             {
-                throw new InvalidOperationException("Count of elements = 0");
+                throw new EmptyException("Count of elements = 0");
             }
 
             return array[head];

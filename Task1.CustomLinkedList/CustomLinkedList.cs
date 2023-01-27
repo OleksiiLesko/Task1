@@ -27,7 +27,11 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
+<<<<<<< HEAD
         /// <exception cref="EmptyException"></exception>
+=======
+        /// <exception cref="LessThenNecessaryException"></exception>
+>>>>>>> feature-exception
         /// <exception cref="OverFlowException"></exception>
         public T this[int position]
         {
@@ -35,11 +39,19 @@ namespace Task1.CustomLinkedList
             {
                 if (position < 0)
                 {
+<<<<<<< HEAD
                     throw new EmptyException("Position less then count of elements in the CustomStack");
                 }
                 if (position > Count)
                 {
                     throw new OverFlowException("Position more then count of elements in the CustomStack");
+=======
+                    throw new LessThenNecessaryException("Position less  then count of elements in the CustomLinkedList");
+                }
+                if(position > Count)
+                {
+                    throw new OverFlowException("Position more  then count of elements in the CustomLinkedList");
+>>>>>>> feature-exception
                 }
                 Node<T> node = Head;
                 for (int i = 0; i < position; i++)
@@ -52,11 +64,19 @@ namespace Task1.CustomLinkedList
             {
                 if (position < 0)
                 {
+<<<<<<< HEAD
                     throw new EmptyException("Position less then count of elements in the CustomStack");
                 }
                 if (position > Count)
                 {
                     throw new OverFlowException("Position more then count of elements in the CustomStack");
+=======
+                    throw new LessThenNecessaryException("Position less  then count of elements in the CustomLinkedList");
+                }
+                if (position > Count)
+                {
+                    throw new OverFlowException("Position more  then count of elements in the CustomLinkedList");
+>>>>>>> feature-exception
                 }
                 Node<T> node = Head;
                 for (int i = 0; i < position; i++)

@@ -7,8 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Task1.CustomQueue\Task1.CustomQueue.csproj" />
-  </ItemGroup>
-
 </Project>

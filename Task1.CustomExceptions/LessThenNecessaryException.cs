@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Task1.CustomExceptions
 {
-    internal class ZeroException
+    public class LessThenNecessaryException : Exception
     {
+        public LessThenNecessaryException(string? paramName) : base(paramName) { }
     }
 }

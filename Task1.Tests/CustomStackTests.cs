@@ -1,4 +1,7 @@
-﻿namespace Task1.CustomStack
+﻿using Task1.CustomExceptions;
+using Task1.CustomQueue;
+
+namespace Task1.CustomStack
 {
     public class CustomStackTests
     {
@@ -76,7 +79,7 @@
         [Fact]
         public void Peek_StackIsEmpty()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<EmptyException>(() =>
             {
                 var newCustomQueue = new CustomStack<int>();
                 newCustomQueue.Peek();
@@ -93,7 +96,7 @@
         [Fact]
         public void Pop_StackIsEmpty()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<EmptyException>(() =>
             {
                 var newCustomStack = new CustomStack<int>();
                 newCustomStack.Push(1);
@@ -142,16 +145,27 @@
             Assert.False(customStack.GetEnumerator().MoveNext());
         }
         [Fact]
-        public void Indexers_LessOrMoreThenCount()
+        public void Indexers_LessThenCount()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            Assert.Throws<LessThenNecessaryException>(() =>
             {
                 var newCustomStack = new CustomStack<int>(3);
                 newCustomStack.Push(1);
                 newCustomStack.Push(2);
                 newCustomStack.Push(3);
                 Console.WriteLine(newCustomStack[-1]);
-                Console.WriteLine(newCustomStack[4]);
+            });
+        }
+        [Fact]
+        public void Indexers_MoreThenCount()
+        {
+            Assert.Throws<OverFlowException>(() =>
+            {
+                var newCustomStack = new CustomStack<int>(3);
+                newCustomStack.Push(1);
+                newCustomStack.Push(2);
+                newCustomStack.Push(3);
+                Console.WriteLine(newCustomStack[5]);
             });
         }
     }

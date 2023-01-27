@@ -27,7 +27,7 @@ namespace Task1.CustomStack
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        /// <exception cref="EmptyException"></exception>
+        /// <exception cref="LessThenNecessaryException"></exception>
         /// <exception cref="OverFlowException"></exception>
         public T this[int position]
         {
@@ -35,7 +35,7 @@ namespace Task1.CustomStack
             {
                 if (position < 0) 
                 {
-                    throw new EmptyException("Position less then count of elements in the CustomStack");
+                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
                 }
                 if  (position > Count)
                 {
@@ -48,7 +48,7 @@ namespace Task1.CustomStack
             {
                 if (position < 0)
                 {
-                    throw new EmptyException("Position less then count of elements in the CustomStack");
+                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
                 }
                 if (position > Count)
                 {

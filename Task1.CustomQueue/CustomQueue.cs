@@ -32,7 +32,7 @@ namespace Task1.CustomQueue
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        /// <exception cref="EmptyException"></exception>
+        /// <exception cref="LessThenNecessaryException"></exception>
         /// <exception cref="OverFlowException"></exception>
         public T this[int position]
         {
@@ -40,7 +40,7 @@ namespace Task1.CustomQueue
             {
                 if (position < 0)
                 {
-                    throw new EmptyException("Position less then count of elements in the CustomStack");
+                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
                 }
                 if (position > Count)
                 {
@@ -52,7 +52,7 @@ namespace Task1.CustomQueue
             {
                     if (position < 0)
                     {
-                        throw new EmptyException("Position less then count of elements in the CustomStack");
+                        throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
                     }
                 if (position > Count)
                 {
@@ -79,7 +79,7 @@ namespace Task1.CustomQueue
         public CustomQueue(int capacity)
         {
             if (capacity < 0)
-                throw new EmptyException("Capacity out of range ");
+                throw new LessThenNecessaryException("Capacity out of range ");
             array = new T[capacity];
             head = 0;
             tail = 0;
@@ -143,12 +143,12 @@ namespace Task1.CustomQueue
         /// Removes the object at the head of the queue and returns it. 
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public T Dequeue()
         {
             if (Count == 0)
             {
-                throw new InvalidOperationException("Count of elements = 0");
+                throw new EmptyException("Count of elements = 0");
             }
             T removed = array[head];
             array[head] = default(T);
@@ -160,12 +160,12 @@ namespace Task1.CustomQueue
         /// Returns the object at the head of the queue. The object remains in the queue.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public T Peek()
         {
             if (Count == 0)
             {
-                throw new InvalidOperationException("Count of elements = 0");
+                throw new EmptyException("Count of elements = 0");
             }
 
             return array[head];

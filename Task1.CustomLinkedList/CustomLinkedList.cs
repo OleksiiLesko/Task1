@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Task1.CustomExceptions;
 
 namespace Task1.CustomLinkedList
 {
@@ -26,14 +27,19 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="LessThenNecessaryException"></exception>
+        /// <exception cref="OverFlowException"></exception>
         public T this[int position]
         {
             get
             {
-                if ((position < 0) || (position > Count))
+                if (position < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomLinkedList");
+                    throw new LessThenNecessaryException("Position less  then count of elements in the CustomLinkedList");
+                }
+                if(position > Count)
+                {
+                    throw new OverFlowException("Position more  then count of elements in the CustomLinkedList");
                 }
                 Node<T> node = Head;
                 for (int i = 0; i < position; i++)
@@ -44,9 +50,13 @@ namespace Task1.CustomLinkedList
             }
             set
             {
-                if ((position < 0) || (position > Count))
+                if (position < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Position less or more then count of elements in the CustomLinkedList");
+                    throw new LessThenNecessaryException("Position less  then count of elements in the CustomLinkedList");
+                }
+                if (position > Count)
+                {
+                    throw new OverFlowException("Position more  then count of elements in the CustomLinkedList");
                 }
                 Node<T> node = Head;
                 for (int i = 0; i < position; i++)
@@ -235,7 +245,7 @@ namespace Task1.CustomLinkedList
         /// <summary>
         /// Remove first element in the list.
         /// </summary>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public void RemoveFirst()
         {
             if (Head != null)
@@ -249,16 +259,16 @@ namespace Task1.CustomLinkedList
             }
             else
             {
-                throw new InvalidOperationException("The linked list is empty");
+                throw new EmptyException("The linked list is empty");
             }
         }
         /// <summary>
         /// Remove last element in the list.
         /// </summary>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="EmptyException"></exception>
         public void RemoveLast()
         {
-            if (Head == null && Tail == null) throw new InvalidOperationException("The linked list is empty");
+            if (Head == null && Tail == null) throw new EmptyException("The linked list is empty");
 
             Tail = Tail.Previous;
             Tail.Next = null;

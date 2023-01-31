@@ -9,6 +9,8 @@ namespace Task1.CustomStack
     /// </summary>
     public class CustomStack<T>: IEnumerable<T>
     {
+        public delegate void CustomDelegate(CustomStack<T> sender, CustomStackEventArgs eventArgs);
+        public event CustomDelegate Notify;
         private T[] array;
         /// <summary>
         /// Set stack size.
@@ -33,27 +35,13 @@ namespace Task1.CustomStack
         {
             get
             {
-                if (position < 0) 
-                {
-                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
-                }
-                if  (position > Count)
-                {
-                    throw new OverFlowException("Position more then count of elements in the CustomStack");
-                }
+                ChangePosition(position);
                 return array[position];
 
             }
             set
             {
-                if (position < 0)
-                {
-                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
-                }
-                if (position > Count)
-                {
-                    throw new OverFlowException("Position more then count of elements in the CustomStack");
-                }
+                ChangePosition(position);
                 array[position] = value;
             }
         }
@@ -77,6 +65,22 @@ namespace Task1.CustomStack
             Count++;
         }
         /// <summary>
+        /// If position of the element less or more then necessary,output data.
+        /// </summary>
+        /// <exception cref="LessThenNecessaryException"></exception>
+        /// <exception cref="OverFlowException"></exception>
+        private void ChangePosition(int position)
+        {
+            if (position < 0)
+            {
+                throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
+            }
+            if (position > Count)
+            {
+                throw new OverFlowException("Position more then count of elements in the CustomStack");
+            }
+        }
+        /// <summary>
         /// Inserts an item as the top element of the stack
         /// </summary>
         /// <param name="item"></param>
@@ -87,6 +91,7 @@ namespace Task1.CustomStack
             {
                 array[Count] = item;
                 Count++;
+                Notify?.Invoke(this, new CustomStackEventArgs($"!\nAdding element"));
             }
             else
             {

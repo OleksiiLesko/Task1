@@ -33,14 +33,7 @@ namespace Task1.CustomLinkedList
         {
             get
             {
-                if (position < 0)
-                {
-                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
-                }
-                if(position > Count)
-                {
-                    throw new OverFlowException("Position more  then count of elements in the CustomLinkedList");
-                }
+                ChangePosition(position);
                 Node<T> node = Head;
                 for (int i = 0; i < position; i++)
                 {
@@ -50,14 +43,7 @@ namespace Task1.CustomLinkedList
             }
             set
             {
-                if (position < 0)
-                {
-                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
-                }
-                if (position > Count)
-                {
-                    throw new OverFlowException("Position more then count of elements in the CustomStack");
-                }
+                ChangePosition(position);
                 Node<T> node = Head;
                 for (int i = 0; i < position; i++)
                 {
@@ -91,6 +77,22 @@ namespace Task1.CustomLinkedList
             Head = item;
             Tail = item;
             Count = 1;
+        }
+        /// <summary>
+        /// If position of the element less or more then necessary,output data.
+        /// </summary>
+        /// <exception cref="LessThenNecessaryException"></exception>
+        /// <exception cref="OverFlowException"></exception>
+        private void ChangePosition(int position)
+        {
+            if (position < 0)
+            {
+                throw new LessThenNecessaryException("Position less then count of elements in the CustomLinkedList");
+            }
+            if (position > Count)
+            {
+                throw new OverFlowException("Position more  then count of elements in the CustomLinkedList");
+            }
         }
         /// <summary>
         /// Delete first occurrence of data in the list.

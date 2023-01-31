@@ -8,7 +8,7 @@ namespace Task1.CustomQueue
     /// CustomQueue represents a first-in, first out collection of object. 
     /// It is used when you need a first-in, first-out access of items.
     /// </summary>
-    public class CustomQueue<T>: IEnumerable<T>
+    public class CustomQueue<T> : IEnumerable<T>
     {
         private T[] array;
         /// <summary>
@@ -38,27 +38,13 @@ namespace Task1.CustomQueue
         {
             get
             {
-                if (position < 0)
-                {
-                    throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
-                }
-                if (position > Count)
-                {
-                    throw new OverFlowException("Position more then count of elements in the CustomStack");
-                }
-                    return array[position];
+                ChangePosition(position);
+                return array[position];
             }
             set
             {
-                    if (position < 0)
-                    {
-                        throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
-                    }
-                if (position > Count)
-                {
-                    throw new OverFlowException("Position more then count of elements in the CustomStack");
-                }
-                        array[position] = value;
+                ChangePosition(position);
+                array[position] = value;
             }
         }
         /// <summary>
@@ -84,6 +70,22 @@ namespace Task1.CustomQueue
             head = 0;
             tail = 0;
             Count = 0;
+        }
+        /// <summary>
+        /// If position of the element less or more then necessary,output data.
+        /// </summary>
+        /// <exception cref="LessThenNecessaryException"></exception>
+        /// <exception cref="OverFlowException"></exception>
+        private void ChangePosition(int position)
+        {
+            if (position < 0)
+            {
+                throw new LessThenNecessaryException("Position less then count of elements in the CustomQueue");
+            }
+            if (position > Count)
+            {
+                throw new OverFlowException("Position more  then count of elements in the CustomQueue");
+            }
         }
         /// <summary>
         /// Grows or shrinks the buffer to hold capacity objects.Capacity
@@ -264,7 +266,7 @@ namespace Task1.CustomQueue
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
-            if (head != -1 )
+            if (head != -1)
             {
                 if (tail >= head)
                 {
@@ -292,7 +294,7 @@ namespace Task1.CustomQueue
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-           return GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

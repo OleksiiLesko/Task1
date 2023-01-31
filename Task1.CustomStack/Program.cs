@@ -1,5 +1,23 @@
 ﻿using Task1.CustomStack;
 var stackArray = new CustomStack<int>(10);
+stackArray.Notify += StackArray_Notify;
+//stackArray.Notify += StackArray_Notif;
+
+//void StackArray_Notif(CustomStack<int> sender, CustomStackEventArgs eventArgs)
+//{
+//    throw new NotImplementedException();
+//}
+
+void StackArray_Notify(CustomStack<int> sender, CustomStackEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in stackArray)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"Add element: {sender.Count}");
+}
+
 Console.WriteLine($"Amount of elements at the beginning:{stackArray.Count}\n");
 stackArray.Push(100);
 foreach (var item in stackArray)

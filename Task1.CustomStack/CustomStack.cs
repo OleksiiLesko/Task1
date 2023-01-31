@@ -7,7 +7,7 @@ namespace Task1.CustomStack
     /// CustomStack represents a last-in first-out collection of object. 
     /// It is used when you need a last-in, first-out access of items.
     /// </summary>
-    public class CustomStack<T>: IEnumerable<T>
+    public class CustomStack<T> : IEnumerable<T>
     {
         public delegate void CustomDelegate(CustomStack<T> sender, CustomStackEventArgs eventArgs);
         public event CustomDelegate Notify;
@@ -73,11 +73,11 @@ namespace Task1.CustomStack
         {
             if (position < 0)
             {
-                throw new LessThenNecessaryException("Position less then count of elements in the CustomStack");
+                Notify?.Invoke(this, new CustomStackEventArgs($"Position less then count of elements in the CustomStack"));
             }
             if (position > Count)
             {
-                throw new OverFlowException("Position more then count of elements in the CustomStack");
+                Notify?.Invoke(this, new CustomStackEventArgs($"Position more then count of elements in the CustomStack"));
             }
         }
         /// <summary>
@@ -91,7 +91,7 @@ namespace Task1.CustomStack
             {
                 array[Count] = item;
                 Count++;
-                Notify?.Invoke(this, new CustomStackEventArgs($"!\nAdding element"));
+                Notify?.Invoke(this, new CustomStackEventArgs($"Adding an element"));
             }
             else
             {
@@ -109,10 +109,12 @@ namespace Task1.CustomStack
             {
                 T item = array[Count - 1];
                 Count--;
+                Notify?.Invoke(this, new CustomStackEventArgs($"Removes and returns element"));
                 return item;
             }
             else
             {
+                Notify?.Invoke(this, new CustomStackEventArgs($"Stack is empty"));
                 throw new EmptyException("Stack is empty");
             }
         }
@@ -129,6 +131,7 @@ namespace Task1.CustomStack
             }
             else
             {
+                Notify?.Invoke(this, new CustomStackEventArgs($"Stack is empty"));
                 throw new EmptyException("Stack is empty");
             }
         }
@@ -226,7 +229,7 @@ namespace Task1.CustomStack
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-           return GetEnumerator();
+            return GetEnumerator();
         }
     }
 

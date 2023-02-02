@@ -207,6 +207,21 @@ namespace Task1.CustomStack
             list.Clear();
             Assert.True(success);
         }
+        [Fact]
+        public void FullEvent()
+        {
+            var list = new CustomStack<int>(2);
+            bool success = false;
+            list.Full += (CustomStack<int> sender, CustomStackEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+            Assert.Throws<OverFlowException>(() =>
+            {
+                list[5] = 2;
+            });
+            Assert.True(success);
+        }
     }
 }
 

@@ -185,5 +185,20 @@ namespace Task1.CustomQueue
             list.Clear();
             Assert.True(success);
         }
+        [Fact]
+        public void FullEvent()
+        {
+            var list = new CustomQueue<int>(2);
+            bool success = false;
+            list.Full += (CustomQueue<int> sender, CustomQueueEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+            Assert.Throws<OverFlowException>(() =>
+            {
+                list[5] = 2;
+            });
+            Assert.True(success);
+        }
     }
 }

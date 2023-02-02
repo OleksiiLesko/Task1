@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Task1.CustomExceptions;
+﻿using Task1.CustomExceptions;
 
 namespace Task1.CustomLinkedList
 {
@@ -213,19 +210,21 @@ namespace Task1.CustomLinkedList
             list.Clear();
             Assert.True(success);
         }
-        //[Fact]
-        //public void FullEvent()
-        //{
-        //    var list = new CustomLinkedList<int>(2);
-        //    bool success = false;
-        //    list.Full += (CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs) =>
-        //    {
-        //        success = true;
-        //    };
-        //    list.AddLast(1);
-        //    list[6] = 20;
-        //    Assert.True(success);
-        //}
+        [Fact]
+        public void FullEvent()
+        {
+            var list = new CustomLinkedList<int>(2);
+            bool success = false;
+            list.Full += (CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+            Assert.Throws<OverFlowException>(() =>
+            {
+                list[5] = 2;
+            });
+            Assert.True(success);
+        }
         [Fact]
         public void Indexers_LessThenCount()
         {

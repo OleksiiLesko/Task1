@@ -1,4 +1,7 @@
-﻿using Task1.CustomExceptions;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Task1.CustomExceptions;
 
 namespace Task1.CustomLinkedList
 {
@@ -170,6 +173,59 @@ namespace Task1.CustomLinkedList
             secondCustomLinkedList.AddLast(3);
             Assert.True(customLinkedList.SequenceEqual(secondCustomLinkedList));
         }
+        [Fact]
+        public void AddEvent()
+        {
+            var list = new CustomLinkedList<int>();
+            bool success = false;
+            list.Add += (CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+
+            list.AddLast(3);
+            Assert.True(success);
+        }
+
+        [Fact]
+        public void DeleteEvent()
+        {
+            var list = new CustomLinkedList<int>();
+            bool success = false;
+            list.Delete += (CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+            list.AddLast(3);
+            list.RemoveFirst();
+            Assert.True(success);
+        }
+        [Fact]
+        public void EmptyEvent()
+        {
+            var list = new CustomLinkedList<int>();
+            bool success = false;
+            list.Empty += (CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+
+            list.Clear();
+            Assert.True(success);
+        }
+        //[Fact]
+        //public void FullEvent()
+        //{
+        //    var list = new CustomLinkedList<int>(2);
+        //    bool success = false;
+        //    list.Full += (CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs) =>
+        //    {
+        //        success = true;
+        //    };
+        //    list.AddLast(1);
+        //    list[6] = 20;
+        //    Assert.True(success);
+        //}
         [Fact]
         public void Indexers_LessThenCount()
         {

@@ -168,5 +168,45 @@ namespace Task1.CustomStack
                 Console.WriteLine(newCustomStack[5]);
             });
         }
+        [Fact]
+        public void AddEvent()
+        {
+            var list = new CustomStack<int>();
+            bool success = false;
+            list.Add += (CustomStack<int> sender, CustomStackEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+
+            list.Push(3);
+            Assert.True(success);
+        }
+
+        [Fact]
+        public void DeleteEvent()
+        {
+            var list = new CustomStack<int>();
+            bool success = false;
+            list.Delete += (CustomStack<int> sender, CustomStackEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+            list.Push(3);
+            list.Pop();
+            Assert.True(success);
+        }
+        [Fact]
+        public void EmptyEvent()
+        {
+            var list = new CustomStack<int>();
+            bool success = false;
+            list.Empty += (CustomStack<int> sender, CustomStackEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+            list.Clear();
+            Assert.True(success);
+        }
     }
 }
+

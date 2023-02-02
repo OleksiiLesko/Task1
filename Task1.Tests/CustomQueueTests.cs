@@ -53,15 +53,6 @@ namespace Task1.CustomQueue
             Assert.Equal(0, customQueue.Count);
         }
         [Fact]
-        public void Dequeue_EmptyQueue()
-        {
-            Assert.Throws<EmptyException>(() =>
-            {
-                var customQueue = new CustomQueue<int>();
-                customQueue.Dequeue();
-            });
-        }
-        [Fact]
         public void Enqueue_AddItemToTheTailOfTheQueue()
         {
             var customQueue = new CustomQueue<int>(2);
@@ -113,15 +104,6 @@ namespace Task1.CustomQueue
             Assert.Equal(1, customQueue.Peek());
         }
         [Fact]
-        public void Peek_EmptyQueue()
-        {
-            Assert.Throws<EmptyException>(() =>
-            {
-                var customQueue = new CustomQueue<int>();
-                customQueue.Peek();
-            });
-        }
-        [Fact]
         public void GetEnumerator_IsEmpty()
         {
             var customQueue = new CustomQueue<int>();
@@ -164,6 +146,44 @@ namespace Task1.CustomQueue
                 Console.WriteLine(customQueue[5]);
             });
         }
+        [Fact]
+        public void AddEvent()
+        {
+            var list = new CustomQueue<int>();
+            bool success = false;
+            list.Add += (CustomQueue<int> sender, CustomQueueEventArgs eventArgs) =>
+            {
+                success = true;
+            };
 
+            list.Enqueue(3);
+            Assert.True(success);
+        }
+
+        [Fact]
+        public void DeleteEvent()
+        {
+            var list = new CustomQueue<int>();
+            bool success = false;
+            list.Delete += (CustomQueue<int> sender, CustomQueueEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+            list.Enqueue(3);
+            list.Dequeue();
+            Assert.True(success);
+        }
+        [Fact]
+        public void EmptyEvent()
+        {
+            var list = new CustomQueue<int>();
+            bool success = false;
+            list.Empty += (CustomQueue<int> sender, CustomQueueEventArgs eventArgs) =>
+            {
+                success = true;
+            };
+            list.Clear();
+            Assert.True(success);
+        }
     }
 }

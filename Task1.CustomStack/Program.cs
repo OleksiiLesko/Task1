@@ -1,23 +1,18 @@
 ﻿using Task1.CustomStack;
 var stackArray = new CustomStack<int>(10);
-stackArray.Notify += StackArray_Notify;
+stackArray.Add += StackArray_Add;
+stackArray.Delete += StackArray_Delete;
+stackArray.Empty += StackArray_Empty;
+stackArray.Full += StackArray_Full;
 Console.WriteLine($"Amount of elements at the beginning:{stackArray.Count}\n");
 stackArray.Push(100);
 Console.WriteLine();
 stackArray.Clear();
-foreach (var item in stackArray)
-{
-    Console.Write(item + " ");
-}
 Console.WriteLine();
 stackArray.Push(200);
 stackArray.Push(300);
 stackArray.Push(400);
 stackArray.Push(500);
-foreach (var item in stackArray)
-{
-    Console.Write(item + " ");
-}
 Console.WriteLine();
 for (int i = 0; i < stackArray.Count; i++)
 {
@@ -34,15 +29,42 @@ Console.WriteLine($"Removes and returns the object at the beginning of the Stack
 Console.WriteLine($"Returns the object at the beginning of the Stack without deleting it:{stackArray.Peek()}\n");
 Console.WriteLine();
 
-void StackArray_Notify(CustomStack<int> sender, CustomStackEventArgs eventArgs)
+void StackArray_Add(CustomStack<int> sender, CustomStackEventArgs eventArgs)
 {
     Console.WriteLine(eventArgs.Message);
-    for (int i = 0; i < stackArray.Count; i++)
+    foreach (var item in stackArray)
     {
-        Console.Write(stackArray[i] + " ");
+        Console.Write(item + " ");
     }
-    Console.WriteLine($"Element added: {sender.Count}");
+    Console.WriteLine($"\nElement added: {sender.Count}");
 };
+void StackArray_Full(CustomStack<int> sender, CustomStackEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in stackArray)
+    {
+        Console.Write(item + " ");
+    }
+}
+
+void StackArray_Empty(CustomStack<int> sender, CustomStackEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in stackArray)
+    {
+        Console.Write(item + " ");
+    }
+}
+
+void StackArray_Delete(CustomStack<int> sender, CustomStackEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in stackArray)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"\nElement removed");
+}
 
 
 var stackArray2 = new CustomStack<int>(10);

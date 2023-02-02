@@ -9,8 +9,28 @@ namespace Task1.CustomStack
     /// </summary>
     public class CustomStack<T> : IEnumerable<T>
     {
+        /// <summary>
+        /// Associates methods with the desired event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         public delegate void CustomDelegate(CustomStack<T> sender, CustomStackEventArgs eventArgs);
-        public event CustomDelegate Notify;
+        /// <summary>
+        /// Event if we add an element.
+        /// </summary>
+        public event CustomDelegate Add;
+        /// <summary>
+        /// Event if we delete an element.
+        /// </summary>
+        public event CustomDelegate Delete;
+        /// <summary>
+        /// Event if container empty.
+        /// </summary>
+        public event CustomDelegate Empty;
+        /// <summary>
+        /// Event if container full.
+        /// </summary>
+        public event CustomDelegate Full;
         private T[] array;
         /// <summary>
         /// Set stack size.
@@ -73,11 +93,11 @@ namespace Task1.CustomStack
         {
             if (position < 0)
             {
-                Notify?.Invoke(this, new CustomStackEventArgs($"Position less then count of elements in the CustomStack"));
+                Empty?.Invoke(this, new CustomStackEventArgs($"Position less then count of elements in the CustomStack"));
             }
             if (position > Count)
             {
-                Notify?.Invoke(this, new CustomStackEventArgs($"Position more then count of elements in the CustomStack"));
+                Full?.Invoke(this, new CustomStackEventArgs($"Position more then count of elements in the CustomStack"));
             }
         }
         /// <summary>
@@ -91,7 +111,7 @@ namespace Task1.CustomStack
             {
                 array[Count] = item;
                 Count++;
-                Notify?.Invoke(this, new CustomStackEventArgs($"Adding an element"));
+                Add?.Invoke(this, new CustomStackEventArgs($"Adding an element"));
             }
             else
             {
@@ -109,12 +129,12 @@ namespace Task1.CustomStack
             {
                 T item = array[Count - 1];
                 Count--;
-                Notify?.Invoke(this, new CustomStackEventArgs($"Removes and returns element"));
+                Delete?.Invoke(this, new CustomStackEventArgs($"Removes and returns element"));
                 return item;
             }
             else
             {
-                Notify?.Invoke(this, new CustomStackEventArgs($"Stack is empty"));
+                Empty?.Invoke(this, new CustomStackEventArgs($"Stack is empty"));
                 throw new EmptyException("Stack is empty");
             }
         }
@@ -131,7 +151,7 @@ namespace Task1.CustomStack
             }
             else
             {
-                Notify?.Invoke(this, new CustomStackEventArgs($"Stack is empty"));
+                Empty?.Invoke(this, new CustomStackEventArgs($"Stack is empty"));
                 throw new EmptyException("Stack is empty");
             }
         }
@@ -184,6 +204,7 @@ namespace Task1.CustomStack
                 Array.Clear(array, 0, MaxCount);
             }
             Count = 0;
+            Empty?.Invoke(this, new CustomStackEventArgs($"Сleared the container"));
         }
         /// <summary>
         /// Used to check whether two specified objects have the same value or not.

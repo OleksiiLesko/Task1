@@ -1,12 +1,12 @@
 ﻿using Task1.CustomQueue;
 
 var queueArray = new  CustomQueue<int>(5);
+queueArray.Add += QueueArray_Add;
+queueArray.Delete += QueueArray_Delete;
+queueArray.Empty += QueueArray_Empty;
+queueArray.Full += QueueArray_Full;
 Console.WriteLine($"Amount of elements at the beginning:{queueArray.Count}\n");
 queueArray.Enqueue(100);
-foreach (var item in queueArray)
-{
-    Console.Write(item + " ");
-}
 Console.WriteLine();
 queueArray.Clear();
 Console.WriteLine();
@@ -47,6 +47,41 @@ Console.WriteLine();
 foreach (var item in queueArray)
 {
     Console.Write(item + " ");
+}
+void QueueArray_Delete(CustomQueue<int> sender, CustomQueueEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in queueArray)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"\nElement removed ");
+}
+void QueueArray_Add(CustomQueue<int> sender, CustomQueueEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in queueArray)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"\nElement added: {sender.Count}");
+}
+void QueueArray_Full(CustomQueue<int> sender, CustomQueueEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in queueArray)
+    {
+        Console.Write(item + " ");
+    }
+}
+
+void QueueArray_Empty(CustomQueue<int> sender, CustomQueueEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in queueArray)
+    {
+        Console.Write(item + " ");
+    }
 }
 Console.WriteLine();
 

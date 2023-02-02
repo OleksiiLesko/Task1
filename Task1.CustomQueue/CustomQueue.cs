@@ -10,6 +10,30 @@ namespace Task1.CustomQueue
     /// </summary>
     public class CustomQueue<T> : IEnumerable<T>
     {
+        /// <summary>
+        /// Associates methods with the desired event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        public delegate void CustomDelegate(CustomQueue<T> sender, CustomQueueEventArgs eventArgs);
+        /// <summary>
+        /// Event if we add an element.
+        /// </summary>
+        public event CustomDelegate Add;
+        /// <summary>
+        /// Event if we delete an element.
+        /// </summary>
+        public event CustomDelegate Delete;
+        /// <summary>
+        /// Event if container full.
+        /// </summary>
+        public event CustomDelegate Full;
+        /// <summary>
+        /// Event if container empty.
+        /// </summary>
+        public event CustomDelegate Empty;
+
+
         private T[] array;
         /// <summary>
         /// The index from which to dequeue if the queue isn't empty.
@@ -32,8 +56,6 @@ namespace Task1.CustomQueue
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        /// <exception cref="LessThenNecessaryException"></exception>
-        /// <exception cref="OverFlowException"></exception>
         public T this[int position]
         {
             get
@@ -74,17 +96,15 @@ namespace Task1.CustomQueue
         /// <summary>
         /// If position of the element less or more then necessary,output data.
         /// </summary>
-        /// <exception cref="LessThenNecessaryException"></exception>
-        /// <exception cref="OverFlowException"></exception>
         private void ChangePosition(int position)
         {
             if (position < 0)
             {
-                throw new LessThenNecessaryException("Position less then count of elements in the CustomQueue");
+                Empty?.Invoke(this, new CustomQueueEventArgs($"Position less then count of elements in the CustomQueue"));
             }
             if (position > Count)
             {
-                throw new OverFlowException("Position more  then count of elements in the CustomQueue");
+                Full?.Invoke(this, new CustomQueueEventArgs($"Position more then count of elements in the CustomQueue"));
             }
         }
         /// <summary>
@@ -140,34 +160,34 @@ namespace Task1.CustomQueue
             array[tail] = item;
             tail = (tail + 1) % array.Length;
             Count++;
+            Add?.Invoke(this, new CustomQueueEventArgs($"Adding an element"));
         }
         /// <summary>
         /// Removes the object at the head of the queue and returns it. 
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="EmptyException"></exception>
         public T Dequeue()
         {
             if (Count == 0)
             {
-                throw new EmptyException("Count of elements = 0");
+                Empty?.Invoke(this, new CustomQueueEventArgs($"CustomQueue is empty"));
             }
             T removed = array[head];
             array[head] = default(T);
             head = (head + 1) % array.Length;
             Count--;
+            Delete?.Invoke(this, new CustomQueueEventArgs($"Remove an element"));
             return removed;
         }
         /// <summary>
         /// Returns the object at the head of the queue. The object remains in the queue.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="EmptyException"></exception>
         public T Peek()
         {
             if (Count == 0)
             {
-                throw new EmptyException("Count of elements = 0");
+                Empty?.Invoke(this, new CustomQueueEventArgs($"CustomQueue is empty"));
             }
 
             return array[head];
@@ -183,6 +203,7 @@ namespace Task1.CustomQueue
         {
             if (Count == 0)
             {
+                Empty?.Invoke(this, new CustomQueueEventArgs($"CustomQueue is empty"));
                 return false;
             }
             foreach (T i in array)
@@ -232,6 +253,7 @@ namespace Task1.CustomQueue
 
             head = 0;
             tail = 0;
+            Empty?.Invoke(this, new CustomQueueEventArgs($"Сleared the container"));
         }
         /// <summary>
         /// Used to check whether two specified objects have the same value or not.

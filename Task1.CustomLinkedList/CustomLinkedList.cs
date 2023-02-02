@@ -106,10 +106,12 @@ namespace Task1.CustomLinkedList
             if (position < 0)
             {
                 Empty?.Invoke(this, new CustomLinkedListEventArgs($"Position less then count of elements in the CustomLinkedList"));
+                throw new LessThenNecessaryException("Position less then count of elements in the CustomLinkedList");
             }
             if (position > Count)
             {
                 Full?.Invoke(this, new CustomLinkedListEventArgs($"Position more then count of elements in the CustomLinkedList"));
+                throw new OverFlowException("Position less then count of elements in the CustomLinkedList");
             }
         }
         /// <summary>

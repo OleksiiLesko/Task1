@@ -101,10 +101,12 @@ namespace Task1.CustomQueue
             if (position < 0)
             {
                 Empty?.Invoke(this, new CustomQueueEventArgs($"Position less then count of elements in the CustomQueue"));
+                throw new LessThenNecessaryException("Position less then count of elements in the CustomQueue");
             }
             if (position > Count)
             {
                 Full?.Invoke(this, new CustomQueueEventArgs($"Position more then count of elements in the CustomQueue"));
+                throw new OverFlowException("Position less then count of elements in the CustomQueue");
             }
         }
         /// <summary>

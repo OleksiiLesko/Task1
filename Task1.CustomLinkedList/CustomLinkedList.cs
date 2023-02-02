@@ -11,6 +11,28 @@ namespace Task1.CustomLinkedList
     public class CustomLinkedList<T>: IEnumerable<T>
     {
         /// <summary>
+        /// Associates methods with the desired event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        public delegate void CustomDelegate(CustomLinkedList<T> sender, CustomLinkedListEventArgs eventArgs);
+        /// <summary>
+        /// Event if we add an element.
+        /// </summary>
+        public event CustomDelegate Add;
+        /// <summary>
+        /// Event if we delete an element.
+        /// </summary>
+        public event CustomDelegate Delete;
+        /// <summary>
+        /// Event if container full.
+        /// </summary>
+        public event CustomDelegate Full;
+        /// <summary>
+        /// Event if container empty.
+        /// </summary>
+        public event CustomDelegate Empty;
+        /// <summary>
         /// First element in the list.
         /// </summary>
         public Node<T> Head { get; private set; }
@@ -27,8 +49,6 @@ namespace Task1.CustomLinkedList
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        /// <exception cref="LessThenNecessaryException"></exception>
-        /// <exception cref="OverFlowException"></exception>
         public T this[int position]
         {
             get
@@ -81,17 +101,15 @@ namespace Task1.CustomLinkedList
         /// <summary>
         /// If position of the element less or more then necessary,output data.
         /// </summary>
-        /// <exception cref="LessThenNecessaryException"></exception>
-        /// <exception cref="OverFlowException"></exception>
         private void ChangePosition(int position)
         {
             if (position < 0)
             {
-                throw new LessThenNecessaryException("Position less then count of elements in the CustomLinkedList");
+                Empty?.Invoke(this, new CustomLinkedListEventArgs($"Position less then count of elements in the CustomLinkedList"));
             }
             if (position > Count)
             {
-                throw new OverFlowException("Position more  then count of elements in the CustomLinkedList");
+                Full?.Invoke(this, new CustomLinkedListEventArgs($"Position more then count of elements in the CustomLinkedList"));
             }
         }
         /// <summary>
@@ -123,6 +141,7 @@ namespace Task1.CustomLinkedList
                     }
                     current = null;
                     Count--;
+                    Delete?.Invoke(this, new CustomLinkedListEventArgs($"Remove an element"));
                     return ;
                 }
                 current = current.Next;
@@ -148,6 +167,8 @@ namespace Task1.CustomLinkedList
             }
             Head = item;
             Count++;
+            Add?.Invoke(this, new CustomLinkedListEventArgs($"Add an element to the haid"));
+
         }
         /// <summary>
         /// Add data to the tail of the list.
@@ -167,12 +188,13 @@ namespace Task1.CustomLinkedList
             }
             Tail = item;
             Count++;
+            Add?.Invoke(this, new CustomLinkedListEventArgs($"Add an element to the tail"));
         }
         /// <summary>
         /// Add data to the tail of the list.
         /// </summary>
         /// <param name="data"></param>
-        private void Add(Node<T> data)
+        private void Insert(Node<T> data)
         {
             var item = new Node<T>(data);
             if (Tail == null)
@@ -205,6 +227,7 @@ namespace Task1.CustomLinkedList
                         item.Next = current.Next;
                         current.Next = item;
                         Count++;
+                        Add?.Invoke(this, new CustomLinkedListEventArgs($"Add an element after certain element"));
                         return;
                     }
                     else
@@ -231,6 +254,7 @@ namespace Task1.CustomLinkedList
                 var current = new Node<T>(data);
                 current.Next = Head;
                 Head = current;
+                Add?.Invoke(this, new CustomLinkedListEventArgs($"Add an element before certain element"));
                 return;
             }
             else
@@ -241,6 +265,7 @@ namespace Task1.CustomLinkedList
                 var thirdCurrent = new Node<T>(data);
                 thirdCurrent.Next = secondCurrent.Next;
                 secondCurrent.Next = thirdCurrent;
+                Add?.Invoke(this, new CustomLinkedListEventArgs($"Add an element before certain element"));
                 return;
             }
         }
@@ -258,9 +283,11 @@ namespace Task1.CustomLinkedList
                     Tail = null;
                 }
                 Count--;
+                Delete?.Invoke(this, new CustomLinkedListEventArgs($"Remove first element"));
             }
             else
             {
+                Empty?.Invoke(this, new CustomLinkedListEventArgs($"The linked list is empty"));
                 throw new EmptyException("The linked list is empty");
             }
         }
@@ -275,6 +302,7 @@ namespace Task1.CustomLinkedList
             Tail = Tail.Previous;
             Tail.Next = null;
             Count--;
+            Delete?.Invoke(this, new CustomLinkedListEventArgs($"Remove last element"));
         }
         /// <summary>
         /// Returns true if the list contains at least one object equal to item.
@@ -286,6 +314,7 @@ namespace Task1.CustomLinkedList
         {
             if (Count == 0)
             {
+                Empty?.Invoke(this, new CustomLinkedListEventArgs($"The linked list is empty"));
                 return false;
             }
             var temp = Head;
@@ -307,6 +336,7 @@ namespace Task1.CustomLinkedList
             Head = null;
             Tail = null;
             Count = 0;
+            Empty?.Invoke(this, new CustomLinkedListEventArgs($"Сleared the containert"));
         }
         /// <summary>
         /// CopyTo copies elements from one collection to another
@@ -323,7 +353,7 @@ namespace Task1.CustomLinkedList
             var curr = Head;
             while (curr != null)
             {
-                list.Add(curr.Copy());
+                list.Insert(curr.Copy());
                 curr = curr.Next;
             }
 

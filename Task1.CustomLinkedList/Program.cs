@@ -1,6 +1,10 @@
 ﻿using Task1.CustomLinkedList;
 
 var list = new CustomLinkedList<int>();
+list.Add += List_Add;
+list.Delete += List_Delete;
+list.Empty += List_Empty;
+list.Full += List_Full;
 list.AddLast(1);
 list.AddLast(2);
 list.AddLast(3);
@@ -66,6 +70,43 @@ foreach (var item in list)
     Console.Write(item + " ");
 }
 Console.WriteLine();
+void List_Full(CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in list)
+    {
+        Console.Write(item + " ");
+    }
+}
+
+void List_Empty(CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in list)
+    {
+        Console.Write(item + " ");
+    }
+}
+
+void List_Delete(CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in list)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"\nElement removed ");
+}
+
+void List_Add(CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in list)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"\nElement added: {sender.Count}");
+}
 
 var secondList = new CustomLinkedList<int>();
 list.CopyTo(secondList);

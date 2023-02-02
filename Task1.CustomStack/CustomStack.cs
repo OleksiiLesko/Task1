@@ -94,10 +94,12 @@ namespace Task1.CustomStack
             if (position < 0)
             {
                 Empty?.Invoke(this, new CustomStackEventArgs($"Position less then count of elements in the CustomStack"));
+                throw new LessThenNecessaryException("Position less then count of elements in the CustomQueue");
             }
             if (position > Count)
             {
                 Full?.Invoke(this, new CustomStackEventArgs($"Position more then count of elements in the CustomStack"));
+                throw new OverFlowException("Position less then count of elements in the CustomQueue");
             }
         }
         /// <summary>

@@ -98,4 +98,23 @@ queueArray2.Enqueue(600);
 Console.WriteLine($"queueArray is equal to queueArray2: {queueArray.Equals(queueArray2)}\n");
 Console.WriteLine($"Determines if an element is in a CustomQueue collection:{queueArray2.Contains(500)}");
 
+var queueArray3 = new CustomQueue<int>(20);
+queueArray3.Add += QueueArray3_Add;
+queueArray3.Enqueue(4);
+queueArray3.Enqueue(5);
+void QueueArray3_Add(CustomQueue<int> sender, CustomQueueEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in queueArray)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"\nElement added: {sender.Count}");
+}
+foreach (var item in queueArray3.Filter(1))
+{
+    Console.Write(item + " ");
+}
+
+
 Console.ReadLine();

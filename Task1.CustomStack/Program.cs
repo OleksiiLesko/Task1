@@ -82,7 +82,7 @@ var stackArray3 = new CustomStack<int>(20);
 stackArray3.Add += StackArray3_Add;
 stackArray3.Push(4);
 stackArray3.Push(5);
-foreach (var item in stackArray3.Filter(1))
+foreach (var item in stackArray3.Filter(8))
 {
     Console.Write(item + " ");
 }

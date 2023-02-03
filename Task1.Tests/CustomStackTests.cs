@@ -1,5 +1,5 @@
 ﻿using Task1.CustomExceptions;
-using Task1.CustomQueue;
+
 
 namespace Task1.CustomStack
 {
@@ -221,6 +221,31 @@ namespace Task1.CustomStack
                 list[5] = 2;
             });
             Assert.True(success);
+        }
+        [Fact]
+        public void Filter_TwoTimesBigger()
+        {
+            var list = new CustomStack<int>(20);
+            list.Push(4);
+            list.Push(5);
+            var secondList = new CustomStack<int>(20);
+            foreach (var item in list.Filter(8))
+            {
+                secondList.Push(item);
+                Console.Write(item + " ");
+            }
+            Assert.True(secondList.Contains(4));
+            Assert.False(secondList.Contains(5));
+        }
+        [Fact]
+        public void Filter_Null()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                CustomStack<int> list = null;
+                list.Filter(1);
+            });
+
         }
     }
 }

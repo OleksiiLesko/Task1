@@ -1,4 +1,6 @@
 ﻿using Task1.CustomExceptions;
+using Task1.CustomQueue;
+using Task1.CustomStack;
 
 namespace Task1.CustomLinkedList
 {
@@ -249,5 +251,31 @@ namespace Task1.CustomLinkedList
                 Console.WriteLine(customLinkedList[5]);
             });
         }
+        [Fact]
+        public void Filter_TwoTimesBigger()
+        {
+            var customLinkedList = new CustomLinkedList<int>(20);
+            customLinkedList.AddLast(2);
+            customLinkedList.AddLast(5);
+            var secondList = new CustomLinkedList<int>(20);
+            foreach (var item in customLinkedList.Filter(8))
+            {
+                secondList.AddLast(item);
+                Console.Write(item + " ");
+            }
+            Assert.True(secondList.Contains(2));
+            Assert.False(secondList.Contains(5));
+        }
+        [Fact]
+        public void Filter_Null()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                CustomLinkedList<int> customLinkedList = null;
+                customLinkedList.Filter(1);
+            });
+
+        }
+
     }
 }

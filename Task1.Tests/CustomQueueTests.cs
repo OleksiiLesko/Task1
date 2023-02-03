@@ -1,5 +1,4 @@
 using Task1.CustomExceptions;
-using Task1.CustomLinkedList;
 
 namespace Task1.CustomQueue
 {
@@ -199,6 +198,32 @@ namespace Task1.CustomQueue
                 list[5] = 2;
             });
             Assert.True(success);
+        }
+        [Fact]
+        public void Filter_RemainderOfDivision()
+        {
+            var list = new CustomQueue<int>(20);
+            list.Enqueue(4);
+            list.Enqueue(5);
+            var secondList = new CustomQueue<int>(20);
+            foreach (var item in list.Filter(1))
+            {
+                secondList.Enqueue(item);
+                Console.Write(item + " ");
+            }
+            Assert.False(secondList.Contains(4));
+            Assert.True(secondList.Contains(5));
+
+        }
+        [Fact]
+        public void Filter_Null()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                CustomQueue<int> customQueue = null;
+                customQueue.Filter(1);
+            });
+
         }
     }
 }

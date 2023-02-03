@@ -20,7 +20,6 @@ for (int i = 0; i < stackArray.Count; i++)
     Console.Write(stackArray[i] + " ");
 }
 Console.WriteLine();
-Console.WriteLine(stackArray[6]);
 Console.WriteLine();
 Console.WriteLine($"Determines if an element is in a Stack collection:{stackArray.Contains(100)}\n");
 Console.WriteLine($"Returns the object at the beginning of the Stack without deleting it:{stackArray.Peek()}\n");
@@ -78,4 +77,24 @@ Console.WriteLine($"stackArray is equal to stackArray2: {stackArray.Equals(stack
 stackArray.Push(600);
 Console.WriteLine($"stackArray is equal to stackArray2: {stackArray.Equals(stackArray2)}\n");
 Console.WriteLine($"Determines if an element is in a Stack collection:{stackArray2.Contains(500)}\n");
+
+var stackArray3 = new CustomStack<int>(20);
+stackArray3.Add += StackArray3_Add;
+stackArray3.Push(4);
+stackArray3.Push(5);
+foreach (var item in stackArray3.Filter(1))
+{
+    Console.Write(item + " ");
+}
+void StackArray3_Add(CustomStack<int> sender, CustomStackEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in stackArray3)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"\nElement added: {sender.Count}");
+}
+
+
 Console.ReadLine();

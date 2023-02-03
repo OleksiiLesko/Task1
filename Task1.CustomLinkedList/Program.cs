@@ -116,4 +116,24 @@ foreach (var item in list)
 }
 Console.WriteLine();
 Console.WriteLine(secondList.Equals(list));
+
+var thirdList = new CustomLinkedList<int>();
+thirdList.Add += ThirdList_Add;
+thirdList.AddLast(2);
+thirdList.AddLast(5);
+foreach (var item in thirdList.Filter(8))
+{
+    Console.Write(item + " ");
+}
+void ThirdList_Add(CustomLinkedList<int> sender, CustomLinkedListEventArgs eventArgs)
+{
+    Console.WriteLine(eventArgs.Message);
+    foreach (var item in list)
+    {
+        Console.Write(item + " ");
+    }
+    Console.WriteLine($"\nElement added: {sender.Count}");
+}
+
+
 Console.ReadLine();
